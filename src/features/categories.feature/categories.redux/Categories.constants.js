@@ -1,0 +1,9 @@
+export const catConst = {
+  SET_CAT: "SET_CAT",
+  UNSET_CAT: "UNSET_CAT",
+  SELECT_ITEM: "SELECT_ITEM",
+
+  ADD_CAT: "ADD_CAT",
+  REMOVE_CAT: "REMOVE_CAT",
+  EDIT_CAT: "EDIT_CAT"
+};
