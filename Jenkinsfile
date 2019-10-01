@@ -38,7 +38,7 @@ pipeline {
              timeout(time: 1, unit: 'MINUTES') {
              waitForQualityGate abortPipeline: true
             }
-            
+
       }
   }
 
@@ -82,7 +82,7 @@ pipeline {
           sshagent(credentials : ['AWS-eu-central-key']) {
               sh 'ssh -o StrictHostKeyChecking=no ubuntu@${server} uptime'
               sh 'ssh -v ubuntu@$server'
-              sh 'ssh ubuntu@$server sudo docker pull repos.opotel.com/locationer' + ":$BUILD_NUMBER"
+              sh 'ssh ubuntu@$server sudo docker pull' + "$imageName" + ":$BUILD_NUMBER"
               sh 'ssh ubuntu@$server sudo docker rm locationer --force '
               sh 'ssh ubuntu@$server sudo docker run --detach  --name locationer  --restart=always --env "VIRTUAL_HOST=locationer.romandulman.com" "LETSENCRYPT_HOST=locationer.romandulman.com"' + "$imageName" + ":$BUILD_NUMBER"
           }
