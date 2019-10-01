@@ -14,7 +14,7 @@ import {virbrate} from "../../../utils/virbrate";
 
 class Categories extends Component {
   state = {
-    selectedItem: selectCatItem
+    selectedItem: ''
   };
   componentWillMount() {
     const { dispatch } = this.props;
@@ -75,8 +75,7 @@ class Categories extends Component {
 }
 const mapStateToProps = state => {
   return {
-    categories: state.CategoriesReducer.categories,
-    selectCatItem: state.CategoriesReducer.selectCatItem
+    categories: state.CategoriesReducer.categories
   };
 };
 export default connect(mapStateToProps)(withStyles(styles)(Categories));

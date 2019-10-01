@@ -213,8 +213,7 @@ class Locations extends Component {
 
 const mapStateToProps = state => {
   return {
-    locations: state.LocationsReducer.locations,
-    selectedInd: state.LocationsReducer.selectedInd
+    locations: state.LocationsReducer.locations
   };
 };
 export default connect(mapStateToProps)(withStyles(styles)(Locations));

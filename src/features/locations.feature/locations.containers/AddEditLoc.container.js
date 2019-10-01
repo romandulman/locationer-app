@@ -145,8 +145,10 @@ class AddLocDialog extends Component {
     getCoords(address ? address : name)
       .then(coords => {
         if (toMap) {
-          if (address.length<1){
-            return alert("We need minimal Address like country name to init Map")
+          if (address.length < 1) {
+            return alert(
+              "We need minimal Address like country name to init Map"
+            );
           }
           this.openGeoCoordsMap.current.handleView(coords); // option 2: open Map window to find coords manually after the response receives, minimum address needed to  initiate the marker in the map
         } else {

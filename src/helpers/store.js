@@ -5,8 +5,5 @@ const loggerMiddleware = createLogger();
 
 export const store = createStore(
   RootReducer,
-  applyMiddleware(
-    loggerMiddleware
-  )
+  applyMiddleware(loggerMiddleware)
 );
-

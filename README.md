@@ -1,5 +1,5 @@
 # Locationer
-### Locations Management React App
+### Locations Management App
 
 #### Features:
 * React.js Frontend

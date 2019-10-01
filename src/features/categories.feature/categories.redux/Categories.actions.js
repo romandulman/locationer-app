@@ -1,6 +1,5 @@
 import { catConst } from "./Categories.constants";
 
-
 /// Set Header Navber toolbar to make future operations on Categories list
 export const setForCategory = () => ({
   type: catConst.SET_CAT
@@ -14,7 +13,6 @@ export const selectCatItem = item => ({
   type: catConst.SELECT_ITEM,
   payload: { item }
 });
-
 
 /// Add, Delete, Edit operations
 export const addCategory = newCat => ({
@@ -31,4 +29,3 @@ export const editCategory = (oldCat, newCat) => ({
   type: catConst.EDIT_CAT,
   payload: { oldCat, newCat }
 });
-
