@@ -1,8 +1,35 @@
-export const initCatState = {
+import {
+  isSavedPersist,
+  loadState,
+  lsConst,
+  saveState
+} from "../utils/local-storage";
+
+export const initialState = ls_key => {
+
+  const what = key => {
+    if (key === lsConst.LCTNR_LOC) {
+      return initLocState;
+    } else {
+      return initCatState;
+    }
+  }
+
+  console.log("1",ls_key);
+
+  if (isSavedPersist(ls_key)) {
+    saveState(what(ls_key), ls_key);
+    return what(ls_key);
+  } else {
+    return loadState(ls_key);
+  }
+};
+
+const initCatState = {
   categories: ["restaurants", "supermarkets", "escape rooms"]
 };
 
-export const initLocState = {
+const initLocState = {
   locations: [
     {
       name: "Upland",

@@ -5,22 +5,14 @@ import {
   loadState,
   saveState
 } from "../../../utils/local-storage";
-import { initCatState } from "../../../helpers/initial-data";
+import { initialState } from "../../../helpers/initial-data";
 
-const initialState = () => {
-  if (isSavedPersist(lsConst.LCTNR_CAT)) {
-    saveState(initCatState, lsConst.LCTNR_CAT);
-    return initCatState;
-  } else {
-    return loadState(lsConst.LCTNR_CAT);
-  }
-};
 
 const filteredItem = (arr, payload) => {
-  return arr.categories.filter(item => item !== payload);
+  return arr.filter(item => item !== payload);
 };
 
-export const CategoriesReducer = (state = initialState(), action) => {
+export const CategoriesReducer = (state = initialState(lsConst.LCTNR_CAT), action) => {
   switch (action.type) {
     case catConst.SET_CAT: ///set for the header actions
       return {
@@ -42,18 +34,13 @@ export const CategoriesReducer = (state = initialState(), action) => {
       };
 
     case catConst.ADD_CAT:
-      saveState(
-        { categories: [...state.categories, action.payload.newCat] },
-        lsConst.LCTNR_CAT
-      );
       return {
         ...state,
         categories: [...state.categories, action.payload.newCat]
       };
 
     case catConst.REMOVE_CAT:
-      const updatedAfterDel = filteredItem(initialState(), action.payload.cat);
-      saveState({ categories: updatedAfterDel }, lsConst.LCTNR_CAT);
+      const updatedAfterDel = filteredItem(state.categories, action.payload.cat);
       return {
         ...state,
         categories: updatedAfterDel,
@@ -61,15 +48,10 @@ export const CategoriesReducer = (state = initialState(), action) => {
       };
 
     case catConst.EDIT_CAT:
-      const updatedAfterEdit = filteredItem(
-        initialState(),
-        action.payload.oldCat
-      );
-      updatedAfterEdit.push(action.payload.newCat);
-      saveState({ categories: updatedAfterEdit }, lsConst.LCTNR_CAT);
+      const updatedAfterEdit = filteredItem(state.categories, action.payload.oldCat);
       return {
         ...state,
-        categories: updatedAfterEdit,
+        categories: [...updatedAfterEdit, action.payload.newCat],
         selectedItem: null
       };
 

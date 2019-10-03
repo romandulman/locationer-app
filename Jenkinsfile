@@ -25,7 +25,7 @@ pipeline {
   stage('Unit Tests'){
       /* React Frontend Unit Tests Analysis  */
       steps {
-        sh 'npm install' /* && npm test'  */
+        sh 'npm install' /* && npm test' not available here */
       }
   }
 

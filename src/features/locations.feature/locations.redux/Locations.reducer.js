@@ -1,27 +1,16 @@
 import { locConst } from "./Locations.constants";
-import {
-  isSavedPersist,
-  loadState,
-  lsConst,
-  saveState
-} from "../../../utils/local-storage";
-import { initLocState } from "../../../helpers/initial-data";
+import { lsConst } from "../../../utils/local-storage";
+import { initialState } from "../../../helpers/initial-data";
 import { sortByAbc, sortByCat } from "../../../utils/sort-func";
-
-const initialState = () => {
-  if (isSavedPersist(lsConst.LCTNR_LOC)) {
-    saveState(initLocState, lsConst.LCTNR_LOC);
-    return initLocState;
-  } else {
-    return loadState(lsConst.LCTNR_LOC);
-  }
-};
 
 const filteredItem = (arr, payload) => {
   return arr.locations.filter(item => item.name !== payload);
 };
 
-export const LocationsReducer = (state = initialState(), action) => {
+export const LocationsReducer = (
+  state = initialState(lsConst.LCTNR_LOC),
+  action
+) => {
   switch (action.type) {
     case locConst.SET_LOC:
       return {
@@ -43,7 +32,7 @@ export const LocationsReducer = (state = initialState(), action) => {
       };
 
     case locConst.RESET_LOC_LIST:
-      const locations = initialState();
+      const locations = initialState(lsConst.LCTNR_LOC);
       return {
         ...state,
         locations: locations.locations,
@@ -52,11 +41,10 @@ export const LocationsReducer = (state = initialState(), action) => {
       };
 
     case locConst.VIEW_CAT_LOC: /// view locations by category
-      const savedLocations = initialState();
+      const savedLocations = initialState(lsConst.LCTNR_LOC);
       const specificCatLocItems = savedLocations.locations.filter(
         item => item.category === action.payload.cat
       );
-
       return {
         ...state,
         locations: specificCatLocItems,
@@ -65,9 +53,6 @@ export const LocationsReducer = (state = initialState(), action) => {
       };
 
     case locConst.ADD_LOC:
-      const updatedAfterAdd = initialState().locations;
-      updatedAfterAdd.push(action.payload.newLoc);
-      saveState({ locations: updatedAfterAdd }, lsConst.LCTNR_LOC);
       return {
         ...state,
         locations:
@@ -77,8 +62,6 @@ export const LocationsReducer = (state = initialState(), action) => {
       };
 
     case locConst.REMOVE_LOC:
-      const updatedAfterDel = filteredItem(initialState(), action.payload.loc);
-      saveState({ locations: updatedAfterDel }, lsConst.LCTNR_LOC);
       const updatedStateDel = filteredItem(
         { locations: [...state.locations] },
         action.payload.loc
@@ -89,19 +72,15 @@ export const LocationsReducer = (state = initialState(), action) => {
       };
 
     case locConst.EDIT_LOC:
-      const updatedAfterEdit = filteredItem(
-        initialState(),
-        action.payload.oldLoc.name
-      );
-      updatedAfterEdit.push(action.payload.newLoc);
-      saveState({ locations: updatedAfterEdit }, lsConst.LCTNR_LOC);
       const updatedStateEdit = filteredItem(
         { locations: [...state.locations] },
         action.payload.oldLoc.name
       );
+
       if (state.category === action.payload.newLoc.category) {
         updatedStateEdit.push(action.payload.newLoc);
       }
+      
       return {
         ...state,
         locations: updatedStateEdit
