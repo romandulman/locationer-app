@@ -1,17 +1,4 @@
 import { catConst } from "./Categories.constants";
-import {
-  lsConst,
-  isSavedPersist,
-  loadState,
-  saveState
-} from "../../../utils/local-storage";
-import { initCatState } from "../../../helpers/initial-data";
-
-
-
-
-
-
 
 /// Set Header Navber toolbar to make future operations on Categories list
 export const setForCategory = () => ({

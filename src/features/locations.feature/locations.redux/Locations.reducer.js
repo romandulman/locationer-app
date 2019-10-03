@@ -12,7 +12,7 @@ export const LocationsReducer = (
   action
 ) => {
   switch (action.type) {
-    case locConst.SET_LOC:
+    case locConst.SET_LOC: ///set for the top Navbar actions
       return {
         ...state,
         setLoc: true,
@@ -37,7 +37,8 @@ export const LocationsReducer = (
         ...state,
         locations: locations.locations,
         selectedItem: null,
-        viewByCat: false
+        viewByCat: false,
+        category: null
       };
 
     case locConst.VIEW_CAT_LOC: /// view locations by category
@@ -76,11 +77,13 @@ export const LocationsReducer = (
         { locations: [...state.locations] },
         action.payload.oldLoc.name
       );
-
-      if (state.category === action.payload.newLoc.category) {
-        updatedStateEdit.push(action.payload.newLoc);
+      if (state.category === action.payload.newLoc.category || state.category === null) {
+       // updatedStateEdit.push(action.payload.newLoc);
+        return{
+          ...state,
+          locations: [...updatedStateEdit, action.payload.newLoc]
+        }
       }
-      
       return {
         ...state,
         locations: updatedStateEdit

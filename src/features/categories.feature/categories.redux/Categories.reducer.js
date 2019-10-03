@@ -1,20 +1,17 @@
 import { catConst } from "./Categories.constants";
-import {
-  lsConst,
-  isSavedPersist,
-  loadState,
-  saveState
-} from "../../../utils/local-storage";
+import { lsConst } from "../../../utils/local-storage";
 import { initialState } from "../../../helpers/initial-data";
-
 
 const filteredItem = (arr, payload) => {
   return arr.filter(item => item !== payload);
 };
 
-export const CategoriesReducer = (state = initialState(lsConst.LCTNR_CAT), action) => {
+export const CategoriesReducer = (
+  state = initialState(lsConst.LCTNR_CAT),
+  action
+) => {
   switch (action.type) {
-    case catConst.SET_CAT: ///set for the header actions
+    case catConst.SET_CAT: ///set for the top Navbar actions
       return {
         ...state,
         setCat: true,
@@ -40,7 +37,10 @@ export const CategoriesReducer = (state = initialState(lsConst.LCTNR_CAT), actio
       };
 
     case catConst.REMOVE_CAT:
-      const updatedAfterDel = filteredItem(state.categories, action.payload.cat);
+      const updatedAfterDel = filteredItem(
+        state.categories,
+        action.payload.cat
+      );
       return {
         ...state,
         categories: updatedAfterDel,
@@ -48,7 +48,10 @@ export const CategoriesReducer = (state = initialState(lsConst.LCTNR_CAT), actio
       };
 
     case catConst.EDIT_CAT:
-      const updatedAfterEdit = filteredItem(state.categories, action.payload.oldCat);
+      const updatedAfterEdit = filteredItem(
+        state.categories,
+        action.payload.oldCat
+      );
       return {
         ...state,
         categories: [...updatedAfterEdit, action.payload.newCat],
